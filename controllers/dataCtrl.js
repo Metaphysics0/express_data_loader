@@ -1,12 +1,15 @@
-const AWS = require('aws-sdk');
+// Mongo
 const { MongoClient } = require('mongodb');
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// fs
 const fs = require('fs');
 const sampleData = fs.readFileSync('/Users/ryan/Desktop/express/covid-data-json.json');
 const objectsToCsv = require('objects-to-csv');
 
 // AWS
+const AWS = require('aws-sdk');
 const S3 = new AWS.S3({
   accessKeyId: process.env.ACCESS_KEY,
   secretAccessKey: process.env.ACCESS_KEY_SECRET,
@@ -30,7 +33,7 @@ const sendDataDB = async (req, res) => {
   }
 };
 
-// Run query and store as CSV file.
+// Run query and store response as CSV file.
 const query = async (req, res) => {
   try {
     await client.connect();
